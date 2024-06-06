@@ -13,7 +13,7 @@ radius = 36.0555
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 
-[node name="Arrow" type="Area2D" parent="." node_paths=PackedStringArray("debug_circle_in", "debug_circle_out", "debug_line_in", "debug_line_out", "hit_raycast_in", "hit_raycast_out", "collider")]
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("debug_circle_in", "debug_circle_out", "debug_line_in", "debug_line_out", "hit_raycast_in", "hit_raycast_out")]
 position = Vector2(576, 324)
 script = ExtResource("2_dma2q")
 debug_circle_in = NodePath("../DebugCircleIn")
@@ -22,12 +22,11 @@ debug_line_in = NodePath("../DebugLineIn")
 debug_line_out = NodePath("../DebugLineOut")
 hit_raycast_in = NodePath("../RayCastIn")
 hit_raycast_out = NodePath("../RayCastOut")
-collider = NodePath("CollisionShape2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arrow"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_crmjq")
 
-[node name="Arrow" type="Sprite2D" parent="Arrow"]
+[node name="Arrow" type="Sprite2D" parent="Area2D"]
 position = Vector2(-10, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_c6o61")
@@ -66,5 +65,5 @@ target_position = Vector2(-100, 38)
 collide_with_areas = true
 collide_with_bodies = false
 
-[connection signal="mouse_entered" from="Arrow" to="Arrow" method="mouse_enter"]
-[connection signal="mouse_exited" from="Arrow" to="Arrow" method="mouse_exit"]
+[connection signal="mouse_entered" from="Area2D" to="Area2D" method="mouse_enter"]
+[connection signal="mouse_exited" from="Area2D" to="Area2D" method="mouse_exit"]

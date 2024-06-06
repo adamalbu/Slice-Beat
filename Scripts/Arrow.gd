@@ -6,6 +6,7 @@ extends Node
 @export var debug_line_out : Line2D
 @export var hit_raycast_in : RayCast2D
 @export var hit_raycast_out : RayCast2D
+@export var collider : CollisionShape2D
 var last_mouse_pos : Vector2
 var current_mouse_pos : Vector2
 
@@ -45,7 +46,6 @@ func _physics_process(delta):
 	var new_debug_circle
 	
 	if hit_raycast_in.is_colliding():
-		print("hit")
 		new_debug_circle = debug_circle_in.duplicate()
 		$"..".add_child(new_debug_circle)
 		new_debug_circle.position = hit_raycast_in.get_collision_point()
@@ -54,6 +54,7 @@ func _physics_process(delta):
 		new_debug_circle = debug_circle_out.duplicate()
 		$"..".add_child(new_debug_circle)
 		new_debug_circle.position = hit_raycast_out.get_collision_point()
+		slice(hit_raycast_in.get_collision_point(), hit_raycast_out.get_collision_point())
 	
 	#print(hit_raycast.is_colliding())
 	
@@ -62,6 +63,29 @@ func _physics_process(delta):
 	
 	#var result = space_state.intersect_ray(query)
 	#print(result)
+	
+func slice(enter_pos, exit_pos):
+	var adjacent = abs(enter_pos.x - exit_pos.x)
+	var opposite = abs(enter_pos.y - exit_pos.y)
+	var angle = rad_to_deg(atan(opposite/adjacent))
+	
+	var midpoint = (enter_pos + exit_pos)/2
+	var tri_corner = Vector2(self.position.x, midpoint.y)
+	var len1 = abs(midpoint.x - tri_corner.x)
+	var len2 = abs(self.position.y - tri_corner.y)
+	var absDist = sqrt(len1**2 + len2**2)
+	var dist = absDist/(collider.shape.radius)
+	
+	var timing = 25 #TODO: implement timing
+	
+	var features_score = {}
+	features_score["dist"] = -13.6*(1+0.0107)**dist+38.6
+	features_score["timing"] = -10*(1+0.033)**timing+50
+	features_score["angle"] = -angle*0.6+35
+	
+	var score = features_score["dist"] + features_score["timing"] + features_score["angle"]
+	score = round(score/10)*10
+	print(score)
 
 func mouse_enter():
 	pass
