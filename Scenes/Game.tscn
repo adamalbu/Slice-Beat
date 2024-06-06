@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://y653qdt8alkm"]
+[gd_scene load_steps=7 format=3 uid="uid://y653qdt8alkm"]
 
 [ext_resource type="Texture2D" uid="uid://b0rgj7ie6rjue" path="res://Assets/arrow.png" id="1_c6o61"]
 [ext_resource type="Script" path="res://Scripts/Arrow.gd" id="2_dma2q"]
+[ext_resource type="Texture2D" uid="uid://dy6t85r2hwayd" path="res://Assets/timing_indicator.png" id="3_8sjta"]
 [ext_resource type="Texture2D" uid="uid://dl8uybxoi2swg" path="res://Assets/debug_circle_in.png" id="3_s6ilv"]
 [ext_resource type="Texture2D" uid="uid://bmkffsescn20e" path="res://Assets/debug_circle_out.png" id="4_fygy0"]
 
@@ -13,24 +14,35 @@ radius = 36.0555
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 
-[node name="Arrow" type="Area2D" parent="." node_paths=PackedStringArray("debug_circle_in", "debug_circle_out", "debug_line_in", "debug_line_out", "hit_raycast_in", "hit_raycast_out", "collider")]
+[node name="Arrow" type="Area2D" parent="." node_paths=PackedStringArray("collider", "timing_indicator", "debug_circle_in", "debug_circle_out", "debug_line_in", "debug_line_out", "hit_raycast_in", "hit_raycast_out")]
 position = Vector2(576, 324)
 script = ExtResource("2_dma2q")
+collider = NodePath("Collision")
+timing_indicator = NodePath("TimingIndicator")
 debug_circle_in = NodePath("../DebugCircleIn")
 debug_circle_out = NodePath("../DebugCircleOut")
 debug_line_in = NodePath("../DebugLineIn")
 debug_line_out = NodePath("../DebugLineOut")
 hit_raycast_in = NodePath("../RayCastIn")
 hit_raycast_out = NodePath("../RayCastOut")
-collider = NodePath("CollisionShape2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arrow"]
+[node name="Collision" type="CollisionShape2D" parent="Arrow"]
 shape = SubResource("CircleShape2D_crmjq")
 
-[node name="Arrow" type="Sprite2D" parent="Arrow"]
+[node name="Sprite" type="Sprite2D" parent="Arrow"]
 position = Vector2(-10, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_c6o61")
+
+[node name="TimingIndicator" type="Sprite2D" parent="Arrow"]
+position = Vector2(-15, 0)
+texture = ExtResource("3_8sjta")
+
+[node name="TimingHit" type="Sprite2D" parent="Arrow"]
+modulate = Color(0, 1, 0.283333, 1)
+position = Vector2(-15, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_8sjta")
 
 [node name="DebugCircleOut" type="Sprite2D" parent="."]
 position = Vector2(1, 2.98023e-08)
@@ -55,14 +67,10 @@ width = 5.0
 default_color = Color(0, 100, 0.28, 1)
 
 [node name="RayCastIn" type="RayCast2D" parent="."]
-position = Vector2(500, 104)
-target_position = Vector2(-100, 38)
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="RayCastOut" type="RayCast2D" parent="."]
-position = Vector2(1000, 208)
-target_position = Vector2(-100, 38)
 collide_with_areas = true
 collide_with_bodies = false
 
