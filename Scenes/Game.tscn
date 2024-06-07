@@ -13,12 +13,15 @@ radius = 36.0555
 
 [node name="GameInfo" type="Node" parent="."]
 
-[node name="Arrow" type="Area2D" parent="." node_paths=PackedStringArray("collider", "timing_indicator", "debug_circle_in", "debug_circle_out", "debug_line_in", "debug_line_out", "hit_raycast_in", "hit_raycast_out")]
+[node name="Arrow" type="Area2D" parent="." node_paths=PackedStringArray("collider", "arrow_sprite", "timing_indicator", "timing_hit", "score_sprite", "debug_circle_in", "debug_circle_out", "debug_line_in", "debug_line_out", "hit_raycast_in", "hit_raycast_out")]
 position = Vector2(576, 324)
 script = ExtResource("2_dma2q")
 collider = NodePath("Collision")
+arrow_sprite = NodePath("Sprite")
 timing_indicator = NodePath("TimingIndicator")
+timing_hit = NodePath("TimingHit")
 time_offset = 3.0
+score_sprite = NodePath("Score")
 debug_circle_in = NodePath("../DebugCircleIn")
 debug_circle_out = NodePath("../DebugCircleOut")
 debug_line_in = NodePath("../DebugLineIn")
@@ -45,6 +48,8 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_8sjta")
 
 [node name="Score" type="Sprite2D" parent="Arrow"]
+position = Vector2(-17, 0)
+scale = Vector2(0.7, 0.7)
 
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0

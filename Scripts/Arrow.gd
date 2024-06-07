@@ -1,8 +1,11 @@
 extends Node
 
 @export var collider : CollisionShape2D
+@export var arrow_sprite : Sprite2D
 @export var timing_indicator : Sprite2D
+@export var timing_hit : Sprite2D
 @export var time_offset : float
+@export var score_sprite : Sprite2D
 @export var debug_circle_in : Sprite2D
 @export var debug_circle_out : Sprite2D
 @export var debug_line_in : Line2D
@@ -16,7 +19,7 @@ var time_left = 100
 var timing_finished = false
 
 var sliced = false
-
+var after_slice_time = 100
 
 func _ready():
 	time_offset -= 1
@@ -28,6 +31,8 @@ func _ready():
 func _process(delta):
 	if !timing_finished:
 		update_timing_indicator(delta)
+	if sliced:
+		update_score_sprite(delta)
 	
 func update_timing_indicator(delta: float):
 	if time_offset <= 0:
@@ -54,6 +59,22 @@ func draw_debug_circle(mouse_pos):
 func _input(event):
 	if event is InputEventMouseMotion:
 		draw_debug_circle(event.position)
+		
+func update_score_sprite(delta):
+	if sliced:
+		
+		#score_sprite.modulate.a = after_slice_time / 100
+		
+		#var tween = 
+		var score_col = Color(score_sprite.modulate.r, score_sprite.modulate.g, score_sprite.modulate.b, 0)
+		get_tree().create_tween().tween_property(score_sprite, "offset", Vector2(0, -100), 1)
+		var tween = get_tree().create_tween()
+		tween.tween_property(score_sprite, "modulate", score_col, 1)
+		tween.tween_callback(self.queue_free)
+		var arrow_col = Color(arrow_sprite.modulate.r, arrow_sprite.modulate.g, arrow_sprite.modulate.b, 0)
+		var hit_col = Color(timing_hit.modulate.r, timing_hit.modulate.g, timing_hit.modulate.b, 0)
+		get_tree().create_tween().tween_property(arrow_sprite, "modulate", arrow_col, 0.2)
+		get_tree().create_tween().tween_property(timing_hit, "modulate", hit_col, 0.2)
 		
 func _physics_process(delta):
 	# Ray positions
@@ -122,6 +143,8 @@ func slice(enter_pos, exit_pos):
 		score = 100
 	elif score < 0:
 		score = 0
+		
+	score_sprite.texture = load("res://Assets/numbers/%s.png" % score)
 	
 	print("SLICE")
 	print(score)
