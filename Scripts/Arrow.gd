@@ -1,13 +1,21 @@
 extends Node
 
+@export_group("Child Components")
 @export var collider : CollisionShape2D
 @export var arrow_sprite : Sprite2D
 @export var timing_indicator : Sprite2D
 @export var timing_hit : Sprite2D
 @export var time_offset : float
 @export var score_sprite : Sprite2D
+
+@export_group("External Components")
 @export var hit_raycast_in : RayCast2D
 @export var hit_raycast_out : RayCast2D
+
+@export_group("Other")
+@export var init_pos : Vector2
+@export var init_rot : float
+
 var last_mouse_pos : Vector2
 var current_mouse_pos : Vector2
 
@@ -19,6 +27,8 @@ var sliced = false
 var after_slice_time = 100
 
 func _ready():
+	self.position = init_pos
+	self.arrow_sprite.rotation = init_rot
 	time_offset -= 1
 	time_offset *= 100
 	timing_indicator.modulate.a = 0
@@ -83,7 +93,7 @@ func _physics_process(delta):
 	
 	#Check hit
 		
-	if hit_raycast_out.is_colliding():
+	if hit_raycast_out.is_colliding() and hit_raycast_out.get_collider() == self:
 		slice(hit_raycast_in.get_collision_point(), hit_raycast_out.get_collision_point())	
 	
 	last_mouse_pos = current_mouse_pos
@@ -97,7 +107,7 @@ func slice(enter_pos, exit_pos):
 	# calculate angle
 	var adjacent = abs(enter_pos.x - exit_pos.x)
 	var opposite = abs(enter_pos.y - exit_pos.y)
-	var angle = rad_to_deg(atan(opposite/adjacent) - self.rotation)
+	var angle = rad_to_deg(atan(opposite/adjacent) - self.arrow_sprite.rotation)
 	
 	# calculate distance
 	var midpoint = (enter_pos + exit_pos)/2

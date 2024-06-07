@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bl45drkdfb3uc"
+path="res://.godot/imported/song.ogg-275c3e4137729a17d364af420faa9777.oggvorbisstr"
+
+[deps]
+
+source_file="res://Levels/Heck Yeah/song.ogg"
+dest_files=["res://.godot/imported/song.ogg-275c3e4137729a17d364af420faa9777.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0.0
+bpm=122.0
+beat_count=0
+bar_beats=4
