@@ -26,7 +26,6 @@ func _ready():
 		time_left = -time_offset
 
 func _process(delta):
-	print(time_offset)
 	if !timing_finished:
 		update_timing_indicator(delta)
 	
@@ -118,6 +117,11 @@ func slice(enter_pos, exit_pos):
 	
 	var score = features_score["dist"] + features_score["timing"] + features_score["angle"]
 	score = round(score/10)*10
+	
+	if score > 100:
+		score = 100
+	elif score < 0:
+		score = 0
 	
 	print("SLICE")
 	print(score)

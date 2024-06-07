@@ -18,7 +18,7 @@ position = Vector2(576, 324)
 script = ExtResource("2_dma2q")
 collider = NodePath("Collision")
 timing_indicator = NodePath("TimingIndicator")
-time_offset = 0.5
+time_offset = 3.0
 debug_circle_in = NodePath("../DebugCircleIn")
 debug_circle_out = NodePath("../DebugCircleOut")
 debug_line_in = NodePath("../DebugLineIn")
@@ -43,6 +43,8 @@ modulate = Color(0, 1, 0.283333, 1)
 position = Vector2(-15, 0)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_8sjta")
+
+[node name="Score" type="Sprite2D" parent="Arrow"]
 
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
