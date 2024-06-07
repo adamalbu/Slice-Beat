@@ -19,10 +19,14 @@ var sliced = false
 
 
 func _ready():
+	time_offset -= 1
 	time_offset *= 100
 	timing_indicator.modulate.a = 0
+	if time_offset < 0:
+		time_left = -time_offset
 
 func _process(delta):
+	print(time_offset)
 	if !timing_finished:
 		update_timing_indicator(delta)
 	
