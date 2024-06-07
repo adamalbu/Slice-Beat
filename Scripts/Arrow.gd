@@ -14,6 +14,7 @@ var current_mouse_pos : Vector2
 var time_left = 100
 var timing_finished = false
 
+var sliceable = false
 var sliced = false
 var after_slice_time = 100
 
@@ -44,6 +45,7 @@ func update_timing_indicator(delta: float):
 		time_offset -= 100*delta
 		if time_offset < 100:
 			self.modulate.a = (-time_offset + 100)/100
+			self.sliceable = true
 		else:
 			self.modulate.a = 0
 
@@ -87,6 +89,8 @@ func _physics_process(delta):
 	last_mouse_pos = current_mouse_pos
 	
 func slice(enter_pos, exit_pos):
+	if !sliceable:
+		return
 	sliced = true
 	
 	# CALCULATE SCORES
