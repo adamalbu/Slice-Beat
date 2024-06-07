@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://f5wtdp3tb30b"]
+
+[ext_resource type="Script" path="res://Scripts/Arrow.gd" id="1_w3i5a"]
+[ext_resource type="Texture2D" uid="uid://b0rgj7ie6rjue" path="res://Assets/arrow.png" id="2_4rceg"]
+[ext_resource type="Texture2D" uid="uid://dy6t85r2hwayd" path="res://Assets/timing_indicator.png" id="3_plfkq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_crmjq"]
+radius = 36.0555
+
+[node name="Arrow" type="Area2D" node_paths=PackedStringArray("collider", "arrow_sprite", "timing_indicator", "timing_hit", "score_sprite")]
+position = Vector2(576, 324)
+script = ExtResource("1_w3i5a")
+collider = NodePath("Collision")
+arrow_sprite = NodePath("Sprite")
+timing_indicator = NodePath("TimingIndicator")
+timing_hit = NodePath("TimingHit")
+score_sprite = NodePath("Score")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(9, 0)
+shape = SubResource("CircleShape2D_crmjq")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_4rceg")
+
+[node name="TimingIndicator" type="Sprite2D" parent="."]
+texture = ExtResource("3_plfkq")
+
+[node name="TimingHit" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 0.283333, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_plfkq")
+
+[node name="Score" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+
+[connection signal="mouse_entered" from="." to="." method="mouse_enter"]
+[connection signal="mouse_exited" from="." to="." method="mouse_exit"]
