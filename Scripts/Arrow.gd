@@ -81,7 +81,7 @@ func slice(enter_pos, exit_pos):
 	# calculate angle
 	var adjacent = abs(enter_pos.x - exit_pos.x)
 	var opposite = abs(enter_pos.y - exit_pos.y)
-	var angle = rad_to_deg(atan(opposite/adjacent))
+	var angle = rad_to_deg(atan(opposite/adjacent) - self.rotation)
 	
 	# calculate distance
 	var midpoint = (enter_pos + exit_pos)/2
