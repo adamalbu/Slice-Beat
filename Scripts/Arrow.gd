@@ -38,6 +38,10 @@ func update_timing_indicator(delta: float):
 			timing_indicator.modulate.a = 0
 	else:
 		time_offset -= 100*delta
+		if time_offset < 100:
+			self.modulate.a = (-time_offset + 100)/100
+		else:
+			self.modulate.a = 0
 
 func draw_debug_circle(mouse_pos):
 	current_mouse_pos = mouse_pos
