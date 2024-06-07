@@ -2,6 +2,7 @@ extends Node
 
 @export var collider : CollisionShape2D
 @export var timing_indicator : Sprite2D
+@export var time_offset : float
 @export var debug_circle_in : Sprite2D
 @export var debug_circle_out : Sprite2D
 @export var debug_line_in : Line2D
@@ -16,19 +17,27 @@ var timing_finished = false
 
 var sliced = false
 
+
+func _ready():
+	time_offset *= 100
+	timing_indicator.modulate.a = 0
+
 func _process(delta):
 	if !timing_finished:
 		update_timing_indicator(delta)
 	
 func update_timing_indicator(delta: float):
-	time_left -= 100*delta
-	timing_indicator.modulate.a = (-time_left+100)/100
-	timing_indicator.scale = Vector2(time_left/200+0.5, time_left/200+0.5)
-	if time_left < 0 and sliced:
-		timing_indicator.queue_free()
-		timing_finished = true
-	if time_left < 0:
-		timing_indicator.modulate.a = 0
+	if time_offset <= 0:
+		time_left -= 100*delta
+		timing_indicator.modulate.a = (-time_left+100)/100
+		timing_indicator.scale = Vector2(time_left/200+0.5, time_left/200+0.5)
+		if time_left < 0 and sliced:
+			timing_indicator.queue_free()
+			timing_finished = true
+		if time_left < 0:
+			timing_indicator.modulate.a = 0
+	else:
+		time_offset -= 100*delta
 
 func draw_debug_circle(mouse_pos):
 	current_mouse_pos = mouse_pos

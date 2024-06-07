@@ -19,6 +19,7 @@ position = Vector2(576, 324)
 script = ExtResource("2_dma2q")
 collider = NodePath("Collision")
 timing_indicator = NodePath("TimingIndicator")
+time_offset = 1.0
 debug_circle_in = NodePath("../DebugCircleIn")
 debug_circle_out = NodePath("../DebugCircleOut")
 debug_line_in = NodePath("../DebugLineIn")
