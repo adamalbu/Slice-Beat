@@ -6,10 +6,6 @@ extends Node
 @export var timing_hit : Sprite2D
 @export var time_offset : float
 @export var score_sprite : Sprite2D
-@export var debug_circle_in : Sprite2D
-@export var debug_circle_out : Sprite2D
-@export var debug_line_in : Line2D
-@export var debug_line_out : Line2D
 @export var hit_raycast_in : RayCast2D
 @export var hit_raycast_out : RayCast2D
 var last_mouse_pos : Vector2
@@ -51,21 +47,15 @@ func update_timing_indicator(delta: float):
 		else:
 			self.modulate.a = 0
 
-func draw_debug_circle(mouse_pos):
+func update_mouse_pos(mouse_pos):
 	current_mouse_pos = mouse_pos
-	debug_circle_out.set_position(mouse_pos)
-	debug_circle_in.set_position(mouse_pos)
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		draw_debug_circle(event.position)
+		update_mouse_pos(event.position)
 		
 func update_score_sprite(delta):
 	if sliced:
-		
-		#score_sprite.modulate.a = after_slice_time / 100
-		
-		#var tween = 
 		var score_col = Color(score_sprite.modulate.r, score_sprite.modulate.g, score_sprite.modulate.b, 0)
 		get_tree().create_tween().tween_property(score_sprite, "offset", Vector2(0, -100), 1)
 		var tween = get_tree().create_tween()
@@ -83,30 +73,15 @@ func _physics_process(delta):
 	var start_pos_in = last_mouse_pos
 	var offset_in = current_mouse_pos - last_mouse_pos
 	
-	# Show rays
-	debug_line_out.points[0] = start_pos_out
-	debug_line_out.points[1] = current_mouse_pos + offset_out
-	debug_line_in.points[0] = start_pos_in
-	debug_line_in.points[1] = current_mouse_pos + offset_in
-	
 	# Raycasts
 	hit_raycast_out.position = start_pos_out
 	hit_raycast_out.target_position = offset_out
 	hit_raycast_in.position = start_pos_in
 	hit_raycast_in.target_position = offset_in
 	
-	# Check hit
-	var new_debug_circle
-	
-	if hit_raycast_in.is_colliding():
-		new_debug_circle = debug_circle_in.duplicate()
-		$"..".add_child(new_debug_circle)
-		new_debug_circle.position = hit_raycast_in.get_collision_point()
+	#Check hit
 		
 	if hit_raycast_out.is_colliding():
-		new_debug_circle = debug_circle_out.duplicate()
-		$"..".add_child(new_debug_circle)
-		new_debug_circle.position = hit_raycast_out.get_collision_point()
 		slice(hit_raycast_in.get_collision_point(), hit_raycast_out.get_collision_point())	
 	
 	last_mouse_pos = current_mouse_pos

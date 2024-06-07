@@ -1,10 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://y653qdt8alkm"]
+[gd_scene load_steps=5 format=3 uid="uid://y653qdt8alkm"]
 
 [ext_resource type="Texture2D" uid="uid://b0rgj7ie6rjue" path="res://Assets/arrow.png" id="1_c6o61"]
 [ext_resource type="Script" path="res://Scripts/Arrow.gd" id="2_dma2q"]
 [ext_resource type="Texture2D" uid="uid://dy6t85r2hwayd" path="res://Assets/timing_indicator.png" id="3_8sjta"]
-[ext_resource type="Texture2D" uid="uid://dl8uybxoi2swg" path="res://Assets/debug_circle_in.png" id="3_s6ilv"]
-[ext_resource type="Texture2D" uid="uid://bmkffsescn20e" path="res://Assets/debug_circle_out.png" id="4_fygy0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_crmjq"]
 radius = 36.0555
@@ -13,7 +11,7 @@ radius = 36.0555
 
 [node name="GameInfo" type="Node" parent="."]
 
-[node name="Arrow" type="Area2D" parent="." node_paths=PackedStringArray("collider", "arrow_sprite", "timing_indicator", "timing_hit", "score_sprite", "debug_circle_in", "debug_circle_out", "debug_line_in", "debug_line_out", "hit_raycast_in", "hit_raycast_out")]
+[node name="Arrow" type="Area2D" parent="." node_paths=PackedStringArray("collider", "arrow_sprite", "timing_indicator", "timing_hit", "score_sprite", "hit_raycast_in", "hit_raycast_out")]
 position = Vector2(576, 324)
 script = ExtResource("2_dma2q")
 collider = NodePath("Collision")
@@ -22,10 +20,6 @@ timing_indicator = NodePath("TimingIndicator")
 timing_hit = NodePath("TimingHit")
 time_offset = 3.0
 score_sprite = NodePath("Score")
-debug_circle_in = NodePath("../DebugCircleIn")
-debug_circle_out = NodePath("../DebugCircleOut")
-debug_line_in = NodePath("../DebugLineIn")
-debug_line_out = NodePath("../DebugLineOut")
 hit_raycast_in = NodePath("../RayCastIn")
 hit_raycast_out = NodePath("../RayCastOut")
 
@@ -53,28 +47,6 @@ scale = Vector2(0.7, 0.7)
 
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
-
-[node name="DebugCircleOut" type="Sprite2D" parent="."]
-position = Vector2(1, 2.98023e-08)
-scale = Vector2(0.0497512, 0.0497512)
-texture = ExtResource("4_fygy0")
-
-[node name="DebugCircleIn" type="Sprite2D" parent="."]
-position = Vector2(0.999985, 3.8147e-06)
-scale = Vector2(0.05, 0.05)
-texture = ExtResource("3_s6ilv")
-
-[node name="DebugLineOut" type="Line2D" parent="."]
-visible = false
-points = PackedVector2Array(0, 0, 0, 0)
-width = 5.0
-default_color = Color(1, 0, 0, 1)
-
-[node name="DebugLineIn" type="Line2D" parent="."]
-visible = false
-points = PackedVector2Array(0, 0, 0, 0)
-width = 5.0
-default_color = Color(0, 100, 0.28, 1)
 
 [node name="RayCastIn" type="RayCast2D" parent="."]
 collide_with_areas = true
